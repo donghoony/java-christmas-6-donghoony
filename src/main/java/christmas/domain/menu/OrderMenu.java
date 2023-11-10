@@ -11,6 +11,13 @@ public class OrderMenu {
         this.orderedMenu = orderedMenu;
     }
 
+    public int getCategoryCount(Category category) {
+        return orderedMenu.stream()
+                .filter(menuAmount -> menuAmount.menu().isCategorySameAs(category))
+                .mapToInt(MenuAmount::amount)
+                .sum();
+    }
+
     public long getTotalPrice() {
         return orderedMenu.stream().mapToLong(MenuAmount::getTotalPrice).sum();
     }

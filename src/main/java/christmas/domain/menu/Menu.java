@@ -31,4 +31,8 @@ public enum Menu {
     public long getPrice() {
         return price;
     }
+
+    public boolean isCategorySameAs(Category category) {
+        return this.category == category;
+    }
 }
