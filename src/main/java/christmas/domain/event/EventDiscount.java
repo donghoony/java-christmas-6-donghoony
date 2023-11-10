@@ -1,11 +1,12 @@
-package christmas.domain.event.discount;
+package christmas.domain.event;
 
 import christmas.domain.Money;
+import christmas.domain.event.discount.Discount;
 import christmas.domain.event.eventdate.EventDate;
 import christmas.domain.menu.OrderMenu;
 import java.time.LocalDate;
 
-public class EventDiscount {
+public class EventDiscount implements Event {
     private final String eventName;
     private final Discount discount;
     private final EventDate eventDate;
@@ -16,9 +17,10 @@ public class EventDiscount {
         this.eventDate = eventDate;
     }
 
-    public DiscountDetail apply(OrderMenu orderMenu) {
+    @Override
+    public EventBenefitDetail getBenefitDetail(OrderMenu orderMenu) {
         Money discountAmount = discount.apply(orderMenu);
-        return new DiscountDetail(this.eventName, discountAmount);
+        return new EventBenefitDetail(this.eventName, discountAmount);
     }
 
     public boolean isAvailableEvent(LocalDate date) {
