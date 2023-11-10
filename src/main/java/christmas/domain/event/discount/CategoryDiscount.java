@@ -1,20 +1,21 @@
 package christmas.domain.event.discount;
 
+import christmas.domain.Money;
 import christmas.domain.menu.Category;
 import christmas.domain.menu.OrderMenu;
 
 public class CategoryDiscount implements Discount {
     private final Category category;
-    private final long discountAmount;
+    private final Money discountAmount;
 
-    public CategoryDiscount(Category category, long discountAmount) {
+    public CategoryDiscount(Category category, Money discountAmount) {
         this.category = category;
         this.discountAmount = discountAmount;
     }
 
     @Override
-    public long apply(OrderMenu orderMenu) {
+    public Money apply(OrderMenu orderMenu) {
         long sameCategoryCount = orderMenu.getCategoryCount(category);
-        return sameCategoryCount * discountAmount;
+        return discountAmount.multiply(sameCategoryCount);
     }
 }

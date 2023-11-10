@@ -1,5 +1,6 @@
 package christmas.domain.event.discount;
 
+import christmas.domain.Money;
 import christmas.domain.menu.Menu;
 import christmas.domain.menu.MenuAmount;
 import christmas.domain.menu.OrderMenu;
@@ -19,7 +20,7 @@ class EventDiscountTest {
                         new MenuAmount(Menu.ICE_CREAM, 1)
                 )
         );
-        EventDiscount alwaysDiscount = new EventDiscount("무조건 천원 할인", (orders -> 1_000L), (date) -> true);
+        EventDiscount alwaysDiscount = new EventDiscount("무조건 천원 할인", (orders -> Money.of(1_000L)), (date) -> true);
 
         // when
         DiscountDetail discountDetail = alwaysDiscount.apply(orderMenu);

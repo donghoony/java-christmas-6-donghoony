@@ -1,5 +1,6 @@
 package christmas.domain.menu;
 
+import christmas.domain.Money;
 import java.util.List;
 
 public class OrderMenu {
@@ -18,7 +19,9 @@ public class OrderMenu {
                 .sum();
     }
 
-    public long getTotalPrice() {
-        return orderedMenu.stream().mapToLong(MenuAmount::getTotalPrice).sum();
+    public Money getTotalPrice() {
+        return orderedMenu.stream()
+                .map(MenuAmount::getTotalPrice)
+                .reduce(Money.of(0L), Money::add);
     }
 }

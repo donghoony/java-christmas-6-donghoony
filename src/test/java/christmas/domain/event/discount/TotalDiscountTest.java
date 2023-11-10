@@ -2,6 +2,7 @@ package christmas.domain.event.discount;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.domain.Money;
 import christmas.domain.menu.Menu;
 import christmas.domain.menu.MenuAmount;
 import christmas.domain.menu.OrderMenu;
@@ -22,9 +23,9 @@ class TotalDiscountTest {
                 )
         );
         // when
-        long expectedDiscountAmount = 1_000L;
+        Money expectedDiscountAmount = Money.of(1_000L);
         TotalDiscount totalDiscount = new TotalDiscount(expectedDiscountAmount);
-        long discountedAmount = totalDiscount.apply(orderMenu);
+        Money discountedAmount = totalDiscount.apply(orderMenu);
         // then
         assertThat(discountedAmount).isEqualTo(expectedDiscountAmount);
     }

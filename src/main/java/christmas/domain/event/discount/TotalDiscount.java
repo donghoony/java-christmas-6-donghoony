@@ -1,16 +1,17 @@
 package christmas.domain.event.discount;
 
+import christmas.domain.Money;
 import christmas.domain.menu.OrderMenu;
 
 public class TotalDiscount implements Discount {
-    private final long discountAmount;
+    private final Money discountAmount;
 
-    public TotalDiscount(long discountAmount) {
+    public TotalDiscount(Money discountAmount) {
         this.discountAmount = discountAmount;
     }
 
     @Override
-    public long apply(OrderMenu orderMenu) {
+    public Money apply(OrderMenu orderMenu) {
         return discountAmount;
     }
 }

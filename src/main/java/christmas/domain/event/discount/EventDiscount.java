@@ -1,5 +1,6 @@
 package christmas.domain.event.discount;
 
+import christmas.domain.Money;
 import christmas.domain.event.eventdate.EventDate;
 import christmas.domain.menu.OrderMenu;
 import java.time.LocalDate;
@@ -16,7 +17,7 @@ public class EventDiscount {
     }
 
     public DiscountDetail apply(OrderMenu orderMenu) {
-        long discountAmount = discount.apply(orderMenu);
+        Money discountAmount = discount.apply(orderMenu);
         return new DiscountDetail(this.eventName, discountAmount);
     }
 

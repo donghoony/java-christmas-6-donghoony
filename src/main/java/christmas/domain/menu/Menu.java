@@ -1,5 +1,7 @@
 package christmas.domain.menu;
 
+import christmas.domain.Money;
+
 public enum Menu {
     MUSHROOM_SOUP(Category.APPETIZER, "양송이수프", 6_000L),
     TAPAS(Category.APPETIZER, "타파스", 5_500L),
@@ -20,15 +22,15 @@ public enum Menu {
 
     private final Category category;
     private final String name;
-    private final long price;
+    private final Money price;
 
     Menu(Category category, String name, long price) {
         this.category = category;
         this.name = name;
-        this.price = price;
+        this.price = Money.of(price);
     }
 
-    public long getPrice() {
+    public Money getPrice() {
         return price;
     }
 

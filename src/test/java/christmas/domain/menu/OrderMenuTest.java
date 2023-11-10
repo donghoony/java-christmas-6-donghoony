@@ -2,6 +2,7 @@ package christmas.domain.menu;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.domain.Money;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,9 +18,11 @@ class OrderMenuTest {
                 new MenuAmount(Menu.ICE_CREAM, 5)
         );
         OrderMenu orderMenu = new OrderMenu(items);
-        long expectedPrice = items.stream().mapToLong(MenuAmount::getTotalPrice).sum();
+        Money expectedPrice = items.stream()
+                .map(MenuAmount::getTotalPrice)
+                .reduce(Money.of(0L), Money::add);
         // when
-        long totalPrice = orderMenu.getTotalPrice();
+        Money totalPrice = orderMenu.getTotalPrice();
         // then
         assertThat(totalPrice).isEqualTo(expectedPrice);
     }
