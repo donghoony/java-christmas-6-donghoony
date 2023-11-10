@@ -11,6 +11,10 @@ public class EventBenefitDetail {
         this.discountAmount = discountAmount;
     }
 
+    public Money getDiscountAmount() {
+        return discountAmount;
+    }
+
     @Override
     public String toString() {
         return eventName + ": " + discountAmount;
