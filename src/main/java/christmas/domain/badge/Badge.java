@@ -1,5 +1,6 @@
 package christmas.domain.badge;
 
+import christmas.domain.Money;
 import java.util.Arrays;
 
 public enum Badge {
@@ -9,18 +10,22 @@ public enum Badge {
     NONE("없음", 0L);
 
     private final String name;
-    private final long minimumBenefitAmount;
+    private final Money minimumBenefitAmount;
 
     Badge(String name, long minimumBenefitAmount) {
         this.name = name;
-        this.minimumBenefitAmount = minimumBenefitAmount;
+        this.minimumBenefitAmount = Money.of(minimumBenefitAmount);
     }
 
-    public static Badge getEligibleBadgeByBenefit(long benefitAmount) {
+    public static Badge getEligibleBadgeByBenefit(Money benefitAmount) {
         return Arrays.stream(Badge.values())
-                .filter(badge -> badge.minimumBenefitAmount <= benefitAmount)
+                .filter(badge -> badge.minimumBenefitAmount.compareTo(benefitAmount) <= 0)
                 .findFirst()
                 .orElse(NONE);
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }

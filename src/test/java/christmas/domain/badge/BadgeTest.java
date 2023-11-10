@@ -2,6 +2,7 @@ package christmas.domain.badge;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.domain.Money;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,7 +26,7 @@ class BadgeTest {
                 100_000L, Badge.SANTA
         );
         // when
-        Badge badge = Badge.getEligibleBadgeByBenefit(benefitAmount);
+        Badge badge = Badge.getEligibleBadgeByBenefit(Money.of(benefitAmount));
         // then
         assertThat(badge).isEqualTo(expectedBadge.get(benefitAmount));
     }
