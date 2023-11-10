@@ -20,11 +20,11 @@ class DiscountEventTest {
                         new MenuAmount(Menu.ICE_CREAM, 1)
                 )
         );
-        DiscountEvent alwaysDiscount = new DiscountEvent("무조건 천원 할인", (orders -> Money.of(1_000L)), (date) -> true);
+        DiscountEvent alwaysDiscount = new DiscountEvent("무조건 천원 할인", (orders -> Money.of(-1_000L)), (date) -> true);
 
         // when
         EventBenefitDetail eventBenefitDetail = alwaysDiscount.getBenefitDetail(orderMenu);
         // then
-        Assertions.assertThat(eventBenefitDetail.toString()).isEqualTo("무조건 천원 할인: 1,000원");
+        Assertions.assertThat(eventBenefitDetail.toString()).isEqualTo("무조건 천원 할인: -1,000원");
     }
 }
