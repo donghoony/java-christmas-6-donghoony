@@ -23,6 +23,7 @@ public class DiscountEvent implements Event {
         return new EventBenefitDetail(this.eventName, discountAmount);
     }
 
+    @Override
     public boolean isAvailableEvent(LocalDate date) {
         return eventDate.isAvailableEvent(date);
     }
