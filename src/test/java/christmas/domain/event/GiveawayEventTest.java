@@ -9,7 +9,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class EventGiveawayTest {
+class GiveawayEventTest {
 
     @Test
     @DisplayName("증정 이벤트에 따른 혜택 내역을 정확하게 반환한다.")
@@ -20,7 +20,7 @@ class EventGiveawayTest {
                         new MenuAmount(Menu.ICE_CREAM, 1)
                 )
         );
-        EventGiveaway giveaway = new EventGiveaway("증정 이벤트", () -> Money.of(-5_000L), (date) -> true);
+        GiveawayEvent giveaway = new GiveawayEvent("증정 이벤트", () -> Money.of(-5_000L), (date) -> true);
         // when
         EventBenefitDetail benefitDetail = giveaway.getBenefitDetail(orderMenu);
         // then

@@ -6,12 +6,12 @@ import christmas.domain.event.eventdate.EventDate;
 import christmas.domain.menu.OrderMenu;
 import java.time.LocalDate;
 
-public class EventDiscount implements Event {
+public class DiscountEvent implements Event {
     private final String eventName;
     private final Discount discount;
     private final EventDate eventDate;
 
-    public EventDiscount(String eventName, Discount discount, EventDate eventDate) {
+    public DiscountEvent(String eventName, Discount discount, EventDate eventDate) {
         this.eventName = eventName;
         this.discount = discount;
         this.eventDate = eventDate;
