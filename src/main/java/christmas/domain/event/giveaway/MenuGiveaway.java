@@ -1,17 +1,17 @@
 package christmas.domain.event.giveaway;
 
-import christmas.domain.Money;
-import christmas.domain.menu.MenuAmount;
+import christmas.domain.menu.Menu;
+import christmas.domain.menu.OrderMenu;
 
 public class MenuGiveaway implements Giveaway {
-    private final MenuAmount giveawayMenu;
+    private final Menu giveawayMenu;
 
-    public MenuGiveaway(MenuAmount giveawayMenu) {
+    public MenuGiveaway(Menu giveawayMenu) {
         this.giveawayMenu = giveawayMenu;
     }
 
     @Override
-    public Money getBenefitAmount() {
-        return giveawayMenu.getTotalPrice();
+    public GiveawayProduct getGiveawayProduct(OrderMenu orderMenu) {
+        return new GiveawayProduct(giveawayMenu.name(), giveawayMenu.getPrice());
     }
 }

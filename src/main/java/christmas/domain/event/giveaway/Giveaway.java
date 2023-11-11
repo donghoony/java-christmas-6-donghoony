@@ -1,8 +1,11 @@
 package christmas.domain.event.giveaway;
 
-import christmas.domain.Money;
-import java.time.LocalDate;
+import christmas.domain.menu.OrderMenu;
 
 public interface Giveaway {
-    Money getBenefitAmount();
+    GiveawayProduct getGiveawayProduct(OrderMenu orderMenu);
+
+    default boolean isEligible(OrderMenu orderMenu) {
+        return true;
+    }
 }
