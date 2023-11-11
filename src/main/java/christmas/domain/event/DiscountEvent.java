@@ -24,7 +24,7 @@ public class DiscountEvent implements Event {
     }
 
     @Override
-    public boolean isAvailableEvent(LocalDate date) {
-        return eventDate.isAvailableEvent(date);
+    public boolean isAvailableEvent(LocalDate date, OrderMenu orderMenu) {
+        return eventDate.isAvailableEvent(date) && discount.isEligible(orderMenu);
     }
 }

@@ -1,8 +1,8 @@
 package christmas.domain.event;
 
-import christmas.domain.Money;
 import christmas.domain.event.eventdate.EventDate;
 import christmas.domain.event.giveaway.Giveaway;
+import christmas.domain.event.giveaway.GiveawayProduct;
 import christmas.domain.menu.OrderMenu;
 import java.time.LocalDate;
 
@@ -19,12 +19,12 @@ public class GiveawayEvent implements Event {
 
     @Override
     public EventBenefitDetail getBenefitDetail(OrderMenu orderMenu) {
-        Money benefitAmount = giveaway.getBenefitAmount();
-        return new EventBenefitDetail(eventName, benefitAmount);
+        GiveawayProduct giveawayProduct = giveaway.getGiveawayProduct(orderMenu);
+        return new EventBenefitDetail(eventName, giveawayProduct.price().multiply(-1L));
     }
 
     @Override
-    public boolean isAvailableEvent(LocalDate date) {
-        return eventDate.isAvailableEvent(date);
+    public boolean isAvailableEvent(LocalDate date, OrderMenu orderMenu) {
+        return eventDate.isAvailableEvent(date) && giveaway.isEligible(orderMenu);
     }
 }

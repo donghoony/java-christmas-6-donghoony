@@ -17,7 +17,7 @@ public class DiscountService {
 
     public List<EventBenefitDetail> applyDiscounts(OrderMenu orderMenu) {
         return discountEvents.stream()
-                .filter(discountEvent -> discountEvent.isAvailableEvent(currentDate))
+                .filter(discountEvent -> discountEvent.isAvailableEvent(currentDate, orderMenu))
                 .map(discountEvent -> discountEvent.getBenefitDetail(orderMenu))
                 .toList();
     }

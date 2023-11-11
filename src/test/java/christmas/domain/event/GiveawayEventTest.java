@@ -1,6 +1,7 @@
 package christmas.domain.event;
 
 import christmas.domain.Money;
+import christmas.domain.event.giveaway.GiveawayProduct;
 import christmas.domain.menu.Menu;
 import christmas.domain.menu.MenuAmount;
 import christmas.domain.menu.OrderMenu;
@@ -20,7 +21,10 @@ class GiveawayEventTest {
                         new MenuAmount(Menu.ICE_CREAM, 1)
                 )
         );
-        GiveawayEvent giveaway = new GiveawayEvent("증정 이벤트", () -> Money.of(-5_000L), (date) -> true);
+        GiveawayEvent giveaway = new GiveawayEvent(
+                "증정 이벤트",
+                (o) -> new GiveawayProduct("사은품", Money.of(5_000L)),
+                (date) -> true);
         // when
         EventBenefitDetail benefitDetail = giveaway.getBenefitDetail(orderMenu);
         // then
