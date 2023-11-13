@@ -3,7 +3,6 @@ package christmas.domain.event;
 import christmas.domain.GiveawayProducts;
 import christmas.domain.Money;
 import java.util.List;
-import java.util.StringJoiner;
 
 public class TotalEventBenefitDetails {
     private final List<EventBenefitDetail> benefitDetails;
@@ -42,11 +41,9 @@ public class TotalEventBenefitDetails {
             return "없음";
         }
 
-        StringJoiner stringJoiner = new StringJoiner("\n");
-        benefitDetails.stream()
+        List<String> details = benefitDetails.stream()
                 .map(EventBenefitDetail::toString)
-                .forEach(stringJoiner::add);
-
-        return stringJoiner.toString();
+                .toList();
+        return String.join("\n", details);
     }
 }

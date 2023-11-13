@@ -1,7 +1,6 @@
 package christmas.domain;
 
 import java.util.List;
-import java.util.StringJoiner;
 
 public class GiveawayProducts {
     private final List<String> productNames;
@@ -16,8 +15,6 @@ public class GiveawayProducts {
             return "없음";
         }
 
-        StringJoiner stringJoiner = new StringJoiner("\n");
-        productNames.forEach(stringJoiner::add);
-        return stringJoiner.toString();
+        return String.join("\n", productNames);
     }
 }
