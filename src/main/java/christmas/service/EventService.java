@@ -2,6 +2,7 @@ package christmas.service;
 
 import christmas.domain.event.EventBenefitDetail;
 import christmas.domain.event.PlannerEvent;
+import christmas.domain.event.TotalEventBenefitDetails;
 import christmas.domain.menu.OrderMenu;
 import java.time.LocalDate;
 import java.util.List;
@@ -13,18 +14,12 @@ public class EventService {
         this.plannerEvents = plannerEvents;
     }
 
-    public List<String> getBenefitDetailsExceptMoney(LocalDate currentDate, OrderMenu orderMenu) {
-        return apply(currentDate, orderMenu)
-                .stream()
-                .filter(EventBenefitDetail::isGiveawayProduct)
-                .map(EventBenefitDetail::getBenefitAsString)
-                .toList();
-    }
-
-    public List<EventBenefitDetail> apply(LocalDate currentDate, OrderMenu orderMenu) {
-        return plannerEvents.stream()
+    public TotalEventBenefitDetails apply(LocalDate currentDate, OrderMenu orderMenu) {
+        List<EventBenefitDetail> benefitDetails = plannerEvents.stream()
                 .filter(plannerEvent -> plannerEvent.isEligible(currentDate, orderMenu))
                 .map(plannerEvent -> plannerEvent.getBenefitDetail(currentDate, orderMenu))
                 .toList();
+
+        return new TotalEventBenefitDetails(benefitDetails);
     }
 }

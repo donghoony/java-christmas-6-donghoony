@@ -1,0 +1,43 @@
+package christmas.domain.event;
+
+import christmas.domain.GiveawayProducts;
+import christmas.domain.Money;
+import java.util.List;
+import java.util.StringJoiner;
+
+public class TotalEventBenefitDetails {
+    private final List<EventBenefitDetail> benefitDetails;
+
+    public TotalEventBenefitDetails(List<EventBenefitDetail> benefitDetails) {
+        this.benefitDetails = benefitDetails;
+    }
+
+    public Money getTotalBenefitAmount() {
+        return benefitDetails.stream()
+                .map(EventBenefitDetail::getPrice)
+                .reduce(Money.of(0L), Money::add);
+    }
+
+    public GiveawayProducts getGiveawayProducts() {
+        List<String> productNames = benefitDetails.stream()
+                .filter(EventBenefitDetail::isGiveawayProduct)
+                .map(EventBenefitDetail::getBenefitAsString)
+                .toList();
+
+        return new GiveawayProducts(productNames);
+    }
+
+    @Override
+    public String toString() {
+        if (benefitDetails.isEmpty()) {
+            return "없음";
+        }
+
+        StringJoiner stringJoiner = new StringJoiner("\n");
+        benefitDetails.stream()
+                .map(EventBenefitDetail::toString)
+                .forEach(stringJoiner::add);
+
+        return stringJoiner.toString();
+    }
+}

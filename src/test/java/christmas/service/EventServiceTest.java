@@ -1,8 +1,9 @@
 package christmas.service;
 
+import christmas.domain.GiveawayProducts;
 import christmas.domain.Money;
-import christmas.domain.event.EventBenefitDetail;
 import christmas.domain.event.PlannerEvent;
+import christmas.domain.event.TotalEventBenefitDetails;
 import christmas.domain.event.discount.CategoryDiscount;
 import christmas.domain.event.discount.TotalDiscount;
 import christmas.domain.event.eventdate.RangeEventDate;
@@ -70,16 +71,10 @@ class EventServiceTest {
                 )
         );
         // when
-        List<EventBenefitDetail> eventBenefitDetails = eventService.apply(today, orderMenu);
-        List<Money> discountAmounts = eventBenefitDetails.stream()
-                .map(EventBenefitDetail::getPrice).toList();
-        Money totalDiscountAmount = discountAmounts.stream().reduce(Money.of(0L), Money::add);
+        TotalEventBenefitDetails benefitDetails = eventService.apply(today, orderMenu);
+        Money discountAmounts = benefitDetails.getTotalBenefitAmount();
         // then
-        Assertions.assertThat(eventBenefitDetails).hasSize(3);
-        Assertions.assertThat(discountAmounts).hasSameElementsAs(
-                List.of(Money.of(-1_200L), Money.of(-4_046L), Money.of(-1_000L))
-        );
-        Assertions.assertThat(totalDiscountAmount).isEqualTo(Money.of(-31_246L + 25_000L));
+        Assertions.assertThat(discountAmounts).isEqualTo(Money.of(-31_246L + 25_000L));
     }
 
     @Test
@@ -107,8 +102,9 @@ class EventServiceTest {
                 new MenuAmount(Menu.TAPAS, 1)
         ));
         // when
-        List<String> benefits = eventService.getBenefitDetailsExceptMoney(today, orderMenu);
+        TotalEventBenefitDetails benefitDetails = eventService.apply(today, orderMenu);
+        GiveawayProducts giveawayProducts = benefitDetails.getGiveawayProducts();
         // then
-        Assertions.assertThat(benefits).hasSameElementsAs(List.of("샴페인 1개"));
+        Assertions.assertThat(giveawayProducts.toString()).contains("샴페인 1개");
     }
 }

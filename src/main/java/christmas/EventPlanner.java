@@ -1,8 +1,9 @@
 package christmas;
 
+import christmas.domain.GiveawayProducts;
 import christmas.domain.Money;
 import christmas.domain.badge.Badge;
-import christmas.domain.event.EventBenefitDetail;
+import christmas.domain.event.TotalEventBenefitDetails;
 import christmas.domain.menu.OrderMenu;
 import christmas.io.PlannerInput;
 import christmas.io.PlannerOutput;
@@ -10,7 +11,6 @@ import christmas.service.BadgeService;
 import christmas.service.EventService;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.List;
 
 public class EventPlanner {
     private final EventService eventService;
@@ -35,19 +35,19 @@ public class EventPlanner {
         Money totalPrice = orderMenu.getTotalPrice();
         LocalDate today = LocalDate.of(2023, 12, 3);
 
-        List<EventBenefitDetail> eventBenefitDetails = eventService.apply(today, orderMenu);
+        TotalEventBenefitDetails benefitDetails = eventService.apply(today, orderMenu);
 
         output.printAbstractIntroduction();
 
         output.printOrderMenu(orderMenu);
         output.printTotalPriceBeforeDiscount(totalPrice);
 
-        List<String> benefitProducts = eventService.getBenefitDetailsExceptMoney(today, orderMenu);
-        output.printBenefitExceptMoney(benefitProducts);
+        GiveawayProducts giveawayProducts = benefitDetails.getGiveawayProducts();
+        output.printBenefitExceptMoney(giveawayProducts);
 
-        output.printTotalBenefits(eventBenefitDetails);
+        output.printTotalBenefits(benefitDetails);
 
-        Money totalBenefitPrice = eventBenefitDetails.stream().map(EventBenefitDetail::getPrice).reduce(Money.of(0L), Money::add);
+        Money totalBenefitPrice = benefitDetails.getTotalBenefitAmount();
         output.printTotalBenefitAmount(totalBenefitPrice);
 
         Money totalPaymentPrice = totalPrice.add(totalBenefitPrice);

@@ -1,10 +1,10 @@
 package christmas.io;
 
+import christmas.domain.GiveawayProducts;
 import christmas.domain.Money;
 import christmas.domain.badge.Badge;
-import christmas.domain.event.EventBenefitDetail;
+import christmas.domain.event.TotalEventBenefitDetails;
 import christmas.domain.menu.OrderMenu;
-import java.util.List;
 
 public class PlannerConsoleOutput implements PlannerOutput {
     @Override
@@ -39,18 +39,16 @@ public class PlannerConsoleOutput implements PlannerOutput {
     }
 
     @Override
-    public void printBenefitExceptMoney(List<String> benefits) {
+    public void printBenefitExceptMoney(GiveawayProducts products) {
         System.out.println("<증정 메뉴>");
-        benefits.forEach(System.out::println);
+        System.out.println(products);
         System.out.println();
     }
 
     @Override
-    public void printTotalBenefits(List<EventBenefitDetail> benefitDetails) {
+    public void printTotalBenefits(TotalEventBenefitDetails benefitDetails) {
         System.out.println("<혜택 내역>");
-        benefitDetails.stream()
-                .map(EventBenefitDetail::toString)
-                .forEach(System.out::println);
+        System.out.println(benefitDetails);
         System.out.println();
     }
 
