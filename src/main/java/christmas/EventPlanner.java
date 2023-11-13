@@ -37,7 +37,7 @@ public class EventPlanner {
 
         TotalEventBenefitDetails benefitDetails = eventService.apply(today, orderMenu);
 
-        output.printAbstractIntroduction();
+        output.printAbstractIntroduction(month.getMonthValue(), day);
 
         output.printOrderMenu(orderMenu);
         output.printTotalPriceBeforeDiscount(totalPrice);

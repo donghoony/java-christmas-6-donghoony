@@ -11,7 +11,7 @@ public interface PlannerOutput {
 
     void askOrder();
 
-    void printAbstractIntroduction();
+    void printAbstractIntroduction(int month, int day);
 
     void printOrderMenu(OrderMenu orderMenu);
 

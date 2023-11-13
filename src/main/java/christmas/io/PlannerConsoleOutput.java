@@ -19,8 +19,8 @@ public class PlannerConsoleOutput implements PlannerOutput {
     }
 
     @Override
-    public void printAbstractIntroduction() {
-        System.out.println("12월 26일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
+    public void printAbstractIntroduction(int month, int day) {
+        System.out.printf("%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n", month, day);
         System.out.println();
     }
 
