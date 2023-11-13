@@ -29,9 +29,9 @@ public class EventPlanner implements ExceptionLoopClient {
     }
 
     public void planEvent() {
-        int day = repeatUntilValid(this::readDate);
+        int day = readDate();
 
-        OrderMenu orderMenu = repeatUntilValid(this::readOrder);
+        OrderMenu orderMenu = readOrder();
         Money totalPrice = orderMenu.getTotalPrice();
         LocalDate today = LocalDate.of(2023, month.getMonthValue(), day);
 
@@ -60,11 +60,11 @@ public class EventPlanner implements ExceptionLoopClient {
 
     private int readDate() {
         output.askExpectedDay(month.getMonthValue());
-        return input.readDate(month);
+        return repeatUntilValid(() -> input.readDate(month));
     }
 
     private OrderMenu readOrder() {
         output.askOrder();
-        return input.readOrders();
+        return repeatUntilValid(input::readOrders);
     }
 }
