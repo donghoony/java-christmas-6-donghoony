@@ -46,7 +46,6 @@ class EventServiceTest {
         ));
 
         EventService eventService = new EventService(
-                today,
                 List.of(
                         new PlannerEvent(
                                 "크리스마스 디데이 할인",
@@ -71,7 +70,7 @@ class EventServiceTest {
                 )
         );
         // when
-        List<EventBenefitDetail> eventBenefitDetails = eventService.apply(orderMenu);
+        List<EventBenefitDetail> eventBenefitDetails = eventService.apply(today, orderMenu);
         List<Money> discountAmounts = eventBenefitDetails.stream()
                 .map(EventBenefitDetail::getPrice).toList();
         Money totalDiscountAmount = discountAmounts.stream().reduce(Money.of(0L), Money::add);
@@ -89,7 +88,6 @@ class EventServiceTest {
         // given
         LocalDate today = LocalDate.of(2023, 12, 3);
         EventService eventService = new EventService(
-                today,
                 List.of(
                         new PlannerEvent(
                                 "무조건 1,000원 할인",
@@ -109,7 +107,7 @@ class EventServiceTest {
                 new MenuAmount(Menu.TAPAS, 1)
         ));
         // when
-        List<String> benefits = eventService.getBenefitDetailsExceptMoney(orderMenu);
+        List<String> benefits = eventService.getBenefitDetailsExceptMoney(today, orderMenu);
         // then
         Assertions.assertThat(benefits).hasSameElementsAs(List.of("샴페인 1개"));
     }

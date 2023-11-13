@@ -7,23 +7,21 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class EventService {
-    private final LocalDate currentDate;
     private final List<PlannerEvent> plannerEvents;
 
-    public EventService(LocalDate currentDate, List<PlannerEvent> plannerEvents) {
-        this.currentDate = currentDate;
+    public EventService(List<PlannerEvent> plannerEvents) {
         this.plannerEvents = plannerEvents;
     }
 
-    public List<String> getBenefitDetailsExceptMoney(OrderMenu orderMenu) {
-        return apply(orderMenu)
+    public List<String> getBenefitDetailsExceptMoney(LocalDate currentDate, OrderMenu orderMenu) {
+        return apply(currentDate, orderMenu)
                 .stream()
                 .filter(EventBenefitDetail::isGiveawayProduct)
                 .map(EventBenefitDetail::getBenefitAsString)
                 .toList();
     }
 
-    public List<EventBenefitDetail> apply(OrderMenu orderMenu) {
+    public List<EventBenefitDetail> apply(LocalDate currentDate, OrderMenu orderMenu) {
         return plannerEvents.stream()
                 .filter(plannerEvent -> plannerEvent.isEligible(currentDate, orderMenu))
                 .map(plannerEvent -> plannerEvent.getBenefitDetail(orderMenu))
