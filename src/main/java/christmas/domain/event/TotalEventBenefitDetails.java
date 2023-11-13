@@ -15,7 +15,16 @@ public class TotalEventBenefitDetails {
     public Money getTotalBenefitAmount() {
         return benefitDetails.stream()
                 .map(EventBenefitDetail::getPrice)
-                .reduce(Money.of(0L), Money::add);
+                .reduce(Money.of(0L), Money::add)
+                .multiply(-1L);
+    }
+
+    public Money getTotalBenefitAmountWithoutGiveawayProducts() {
+        return benefitDetails.stream()
+                .filter(benefitDetail -> !benefitDetail.isGiveawayProduct())
+                .map(EventBenefitDetail::getPrice)
+                .reduce(Money.of(0L), Money::add)
+                .multiply(-1L);
     }
 
     public GiveawayProducts getGiveawayProducts() {

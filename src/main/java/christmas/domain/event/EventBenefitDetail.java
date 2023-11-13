@@ -26,6 +26,6 @@ public class EventBenefitDetail {
 
     @Override
     public String toString() {
-        return eventName + ": " + benefit.getPrice();
+        return eventName + ": " + benefit.getPrice().multiply(-1L);
     }
 }

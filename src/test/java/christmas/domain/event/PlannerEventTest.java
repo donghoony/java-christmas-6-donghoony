@@ -24,7 +24,7 @@ class PlannerEventTest {
         );
         PlannerEvent alwaysDiscount = new PlannerEvent(
                 "무조건 천원 할인",
-                (date, orders) -> Money.of(-1_000L),
+                (date, orders) -> Money.of(1_000L),
                 (date) -> true,
                 (o) -> true
         );

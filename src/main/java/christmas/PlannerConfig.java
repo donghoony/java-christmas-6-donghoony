@@ -41,7 +41,7 @@ public class PlannerConfig {
                 "크리스마스 디데이 할인",
                 (date, o) -> {
                     int diff = date.getDayOfMonth() - 1;
-                    return Money.of(-1_000L - 100L * diff);
+                    return Money.of(1_000L + 100L * diff);
                 },
                 new RangeEventDate(month.atDay(1), month.atDay(25)),
                 eventPredicate);
@@ -53,7 +53,7 @@ public class PlannerConfig {
 
         return new PlannerEvent(
                 "평일 할인",
-                new CategoryDiscount(Category.DESSERT, Money.of(-2_023L)),
+                new CategoryDiscount(Category.DESSERT, Money.of(2_023L)),
                 new RangeEventDate(month.atDay(1), month.atEndOfMonth(), weekdays),
                 eventPredicate);
     }
@@ -63,7 +63,7 @@ public class PlannerConfig {
 
         return new PlannerEvent(
                 "주말 할인",
-                new CategoryDiscount(Category.MAIN_DISH, Money.of(-2_023L)),
+                new CategoryDiscount(Category.MAIN_DISH, Money.of(2_023L)),
                 new RangeEventDate(month.atDay(1), month.atEndOfMonth(), weekends),
                 eventPredicate);
     }
@@ -79,7 +79,7 @@ public class PlannerConfig {
         );
 
         return new PlannerEvent("특별 할인",
-                new TotalDiscount(Money.of(-1_000L)),
+                new TotalDiscount(Money.of(1_000L)),
                 new SpecificEventDate(eventDays),
                 eventPredicate);
     }

@@ -50,7 +50,7 @@ public class EventPlanner {
         Money totalBenefitPrice = benefitDetails.getTotalBenefitAmount();
         output.printTotalBenefitAmount(totalBenefitPrice);
 
-        Money totalPaymentPrice = totalPrice.add(totalBenefitPrice);
+        Money totalPaymentPrice = totalPrice.add(benefitDetails.getTotalBenefitAmountWithoutGiveawayProducts());
         output.printTotalPriceAfterDiscount(totalPaymentPrice);
 
         Badge badge = badgeService.getBadgeByTotalBenefit(totalBenefitPrice);

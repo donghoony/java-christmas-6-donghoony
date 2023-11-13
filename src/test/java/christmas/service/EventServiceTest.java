@@ -52,20 +52,20 @@ class EventServiceTest {
                                 "크리스마스 디데이 할인",
                                 (date, o) -> {
                                     int diff = date.getDayOfMonth() - startOfDecember.getDayOfMonth();
-                                    return Money.of(-1000 - 100 * diff);
+                                    return Money.of(1000 + 100 * diff);
                                 },
                                 new RangeEventDate(startOfDecember, endOfDecember),
                                 (o) -> true),
                         new PlannerEvent("평일 할인",
-                                new CategoryDiscount(Category.DESSERT, Money.of(-2_023L)),
+                                new CategoryDiscount(Category.DESSERT, Money.of(2_023L)),
                                 new RangeEventDate(startOfDecember, endOfDecember, weekdays),
                                 (o) -> true),
                         new PlannerEvent("주말 할인",
-                                new CategoryDiscount(Category.MAIN_DISH, Money.of(-2_023L)),
+                                new CategoryDiscount(Category.MAIN_DISH, Money.of(2_023L)),
                                 new RangeEventDate(startOfDecember, endOfDecember, weekends),
                                 (o) -> true),
                         new PlannerEvent("특별 할인",
-                                new TotalDiscount(Money.of(-1_000L)),
+                                new TotalDiscount(Money.of(1_000L)),
                                 new SpecificEventDate(eventDays),
                                 (o) -> true)
                 )
