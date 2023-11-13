@@ -33,7 +33,7 @@ public class EventPlanner {
 
         OrderMenu orderMenu = readOrder();
         Money totalPrice = orderMenu.getTotalPrice();
-        LocalDate today = LocalDate.of(2023, 12, 3);
+        LocalDate today = LocalDate.of(2023, month.getMonthValue(), day);
 
         TotalEventBenefitDetails benefitDetails = eventService.apply(today, orderMenu);
 
