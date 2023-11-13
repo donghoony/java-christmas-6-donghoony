@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.text.NumberFormat;
 import java.util.Objects;
 
-public class Money implements Comparable<Money> {
+public class Money implements Comparable<Money>, Beneficial {
     private final String CURRENCY = "원";
     private final BigInteger amount;
 
@@ -57,5 +57,10 @@ public class Money implements Comparable<Money> {
     @Override
     public int hashCode() {
         return Objects.hash(CURRENCY, amount);
+    }
+
+    @Override
+    public Money getPrice() {
+        return this;
     }
 }
