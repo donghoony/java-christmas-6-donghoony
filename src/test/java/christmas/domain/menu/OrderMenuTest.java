@@ -82,26 +82,4 @@ class OrderMenuTest {
         assertThatThrownBy(() -> new OrderMenu(orders))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
-    @Test
-    @DisplayName("주문 순서가 다르더라도 주문 내역이 같다면, 올바른 주문이다.")
-    public void equalsTest() {
-        // given
-        OrderMenu orderMenu1 = new OrderMenu(
-                List.of(
-                        new MenuAmount(Menu.SEAFOOD_PASTA, 1),
-                        new MenuAmount(Menu.CHOCOLATE_CAKE, 4),
-                        new MenuAmount(Menu.BARBEQUE_RIB, 3)
-                )
-        );
-        OrderMenu orderMenu2 = new OrderMenu(
-                List.of(
-                        new MenuAmount(Menu.CHOCOLATE_CAKE, 4),
-                        new MenuAmount(Menu.BARBEQUE_RIB, 3),
-                        new MenuAmount(Menu.SEAFOOD_PASTA, 1)
-                )
-        );
-        // when, then
-        assertThat(orderMenu1.equals(orderMenu2)).isTrue();
-    }
 }

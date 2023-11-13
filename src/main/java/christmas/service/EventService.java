@@ -24,7 +24,7 @@ public class EventService {
     public List<EventBenefitDetail> apply(LocalDate currentDate, OrderMenu orderMenu) {
         return plannerEvents.stream()
                 .filter(plannerEvent -> plannerEvent.isEligible(currentDate, orderMenu))
-                .map(plannerEvent -> plannerEvent.getBenefitDetail(orderMenu))
+                .map(plannerEvent -> plannerEvent.getBenefitDetail(currentDate, orderMenu))
                 .toList();
     }
 }

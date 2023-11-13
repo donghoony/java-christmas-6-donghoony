@@ -5,6 +5,7 @@ import christmas.domain.Money;
 import christmas.domain.menu.Menu;
 import christmas.domain.menu.MenuAmount;
 import christmas.domain.menu.OrderMenu;
+import java.time.LocalDate;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -17,8 +18,9 @@ class MenuGiveawayTest {
         // given
         MenuGiveaway menuGiveaway = new MenuGiveaway(new MenuAmount(Menu.BARBEQUE_RIB, 1));
         Money expectedBenefit = Menu.BARBEQUE_RIB.getPrice();
+        LocalDate today = LocalDate.of(2023, 12, 1);
         // when
-        Beneficial benefit = menuGiveaway.apply(new OrderMenu(
+        Beneficial benefit = menuGiveaway.apply(today, new OrderMenu(
                 List.of(
                         new MenuAmount(Menu.SEAFOOD_PASTA, 1)
                 )

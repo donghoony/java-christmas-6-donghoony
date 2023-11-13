@@ -34,7 +34,7 @@ class EventServiceTest {
                 LocalDate.of(2023, 12, 3),
                 LocalDate.of(2023, 12, 10),
                 LocalDate.of(2023, 12, 17),
-                LocalDate.of(2023, 10, 24),
+                LocalDate.of(2023, 12, 24),
                 LocalDate.of(2023, 12, 25),
                 LocalDate.of(2023, 12, 31)
         );
@@ -49,8 +49,8 @@ class EventServiceTest {
                 List.of(
                         new PlannerEvent(
                                 "크리스마스 디데이 할인",
-                                (o) -> {
-                                    int diff = today.getDayOfMonth() - startOfDecember.getDayOfMonth();
+                                (date, o) -> {
+                                    int diff = date.getDayOfMonth() - startOfDecember.getDayOfMonth();
                                     return Money.of(-1000 - 100 * diff);
                                 },
                                 new RangeEventDate(startOfDecember, endOfDecember),
@@ -91,13 +91,13 @@ class EventServiceTest {
                 List.of(
                         new PlannerEvent(
                                 "무조건 1,000원 할인",
-                                (o) -> Money.of(1_000L),
+                                (d, o) -> Money.of(1_000L),
                                 (date) -> true,
                                 (o) -> true
                         ),
                         new PlannerEvent(
                                 "무조건 샴페인 증정",
-                                (o) -> new MenuAmount(Menu.CHAMPAGNE, 1),
+                                (d, o) -> new MenuAmount(Menu.CHAMPAGNE, 1),
                                 (date) -> true,
                                 (o) -> true
                         )

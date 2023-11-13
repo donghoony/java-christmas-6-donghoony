@@ -19,8 +19,8 @@ public class PlannerEvent {
         this.eligibility = eligibility;
     }
 
-    public EventBenefitDetail getBenefitDetail(OrderMenu orderMenu) {
-        Beneficial benefit = event.apply(orderMenu);
+    public EventBenefitDetail getBenefitDetail(LocalDate date, OrderMenu orderMenu) {
+        Beneficial benefit = event.apply(date, orderMenu);
         return new EventBenefitDetail(this.eventName, benefit);
     }
 

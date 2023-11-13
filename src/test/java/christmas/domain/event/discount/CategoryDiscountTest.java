@@ -8,6 +8,7 @@ import christmas.domain.menu.Category;
 import christmas.domain.menu.Menu;
 import christmas.domain.menu.MenuAmount;
 import christmas.domain.menu.OrderMenu;
+import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,8 @@ class CategoryDiscountTest {
         Money discountPerDish = Money.of(1_000L);
         Money expectedDiscountAmount = Money.of(5_000L);
         CategoryDiscount categoryDiscount = new CategoryDiscount(Category.MAIN_DISH, discountPerDish);
-        Beneficial discountedAmount = categoryDiscount.apply(orderMenu);
+        LocalDate today = LocalDate.of(2023, 12, 1);
+        Beneficial discountedAmount = categoryDiscount.apply(today, orderMenu);
         // then
         assertThat(discountedAmount.getPrice()).isEqualTo(expectedDiscountAmount);
     }
