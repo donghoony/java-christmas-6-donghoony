@@ -17,9 +17,13 @@ public class GiveawayEvent implements Event {
         this.eventDate = eventDate;
     }
 
+    public GiveawayProduct getGiveawayProduct(OrderMenu orderMenu) {
+        return giveaway.getGiveawayProduct(orderMenu);
+    }
+
     @Override
     public EventBenefitDetail getBenefitDetail(OrderMenu orderMenu) {
-        GiveawayProduct giveawayProduct = giveaway.getGiveawayProduct(orderMenu);
+        GiveawayProduct giveawayProduct = getGiveawayProduct(orderMenu);
         return new EventBenefitDetail(eventName, giveawayProduct.price().multiply(-1L));
     }
 
