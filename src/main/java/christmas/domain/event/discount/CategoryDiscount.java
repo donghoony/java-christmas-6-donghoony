@@ -1,10 +1,12 @@
 package christmas.domain.event.discount;
 
+import christmas.domain.Beneficial;
 import christmas.domain.Money;
+import christmas.domain.event.Event;
 import christmas.domain.menu.Category;
 import christmas.domain.menu.OrderMenu;
 
-public class CategoryDiscount implements Discount {
+public class CategoryDiscount implements Event {
     private final Category category;
     private final Money discountAmount;
 
@@ -14,7 +16,7 @@ public class CategoryDiscount implements Discount {
     }
 
     @Override
-    public Money apply(OrderMenu orderMenu) {
+    public Beneficial apply(OrderMenu orderMenu) {
         long sameCategoryCount = orderMenu.getCategoryCount(category);
         return discountAmount.multiply(sameCategoryCount);
     }

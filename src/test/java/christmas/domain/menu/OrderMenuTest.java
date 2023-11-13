@@ -21,7 +21,7 @@ class OrderMenuTest {
         );
         OrderMenu orderMenu = new OrderMenu(items);
         Money expectedPrice = items.stream()
-                .map(MenuAmount::getTotalPrice)
+                .map(MenuAmount::getPrice)
                 .reduce(Money.of(0L), Money::add);
         // when
         Money totalPrice = orderMenu.getTotalPrice();
@@ -41,7 +41,7 @@ class OrderMenuTest {
         // when, then
         Assertions.assertDoesNotThrow(() -> new OrderMenu(orders));
     }
-    
+
     @Test
     @DisplayName("음료 외 메뉴를 주문하지 않으면, 예외를 발생한다.")
     public void onlyBeverageTest() {
@@ -81,5 +81,27 @@ class OrderMenuTest {
         // when, then
         assertThatThrownBy(() -> new OrderMenu(orders))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("주문 순서가 다르더라도 주문 내역이 같다면, 올바른 주문이다.")
+    public void equalsTest() {
+        // given
+        OrderMenu orderMenu1 = new OrderMenu(
+                List.of(
+                        new MenuAmount(Menu.SEAFOOD_PASTA, 1),
+                        new MenuAmount(Menu.CHOCOLATE_CAKE, 4),
+                        new MenuAmount(Menu.BARBEQUE_RIB, 3)
+                )
+        );
+        OrderMenu orderMenu2 = new OrderMenu(
+                List.of(
+                        new MenuAmount(Menu.CHOCOLATE_CAKE, 4),
+                        new MenuAmount(Menu.BARBEQUE_RIB, 3),
+                        new MenuAmount(Menu.SEAFOOD_PASTA, 1)
+                )
+        );
+        // when, then
+        assertThat(orderMenu1.equals(orderMenu2)).isTrue();
     }
 }

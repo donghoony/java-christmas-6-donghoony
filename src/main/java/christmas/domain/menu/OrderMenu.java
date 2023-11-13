@@ -4,6 +4,7 @@ import christmas.domain.Money;
 import christmas.exception.ExceptionMessage;
 import christmas.exception.PlannerException;
 import java.util.List;
+import java.util.StringJoiner;
 
 public class OrderMenu {
     private final int MAX_ORDER_COUNT = 20;
@@ -24,7 +25,7 @@ public class OrderMenu {
 
     public Money getTotalPrice() {
         return orderedMenu.stream()
-                .map(MenuAmount::getTotalPrice)
+                .map(MenuAmount::getPrice)
                 .reduce(Money.of(0L), Money::add);
     }
 
@@ -63,4 +64,13 @@ public class OrderMenu {
         }
     }
 
+    @Override
+    public String toString() {
+        StringJoiner stringJoiner = new StringJoiner("\n");
+        orderedMenu.stream()
+                .map(MenuAmount::toString)
+                .forEach(stringJoiner::add);
+
+        return stringJoiner.toString();
+    }
 }

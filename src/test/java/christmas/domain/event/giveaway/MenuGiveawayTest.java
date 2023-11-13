@@ -1,5 +1,6 @@
 package christmas.domain.event.giveaway;
 
+import christmas.domain.Beneficial;
 import christmas.domain.Money;
 import christmas.domain.menu.Menu;
 import christmas.domain.menu.MenuAmount;
@@ -14,11 +15,15 @@ class MenuGiveawayTest {
     @DisplayName("메뉴를 증정하면, 해당 메뉴의 가격만큼의 혜택을 반환한다.")
     public void getGiveawayBenefitTest() {
         // given
-        MenuGiveaway menuGiveaway = new MenuGiveaway(Menu.BARBEQUE_RIB);
+        MenuGiveaway menuGiveaway = new MenuGiveaway(new MenuAmount(Menu.BARBEQUE_RIB, 1));
         Money expectedBenefit = Menu.BARBEQUE_RIB.getPrice();
         // when
-        Money benefitAmount = menuGiveaway.getGiveawayProduct(new OrderMenu(List.of(new MenuAmount(Menu.TAPAS, 1)))).price();
+        Beneficial benefit = menuGiveaway.apply(new OrderMenu(
+                List.of(
+                        new MenuAmount(Menu.SEAFOOD_PASTA, 1)
+                )
+        ));
         // then
-        Assertions.assertThat(benefitAmount).isEqualTo(expectedBenefit);
+        Assertions.assertThat(benefit.getPrice()).isEqualTo(expectedBenefit);
     }
 }

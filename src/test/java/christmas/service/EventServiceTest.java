@@ -1,7 +1,7 @@
 package christmas.service;
 
 import christmas.domain.Money;
-import christmas.domain.event.DiscountEvent;
+import christmas.domain.event.PlannerEvent;
 import christmas.domain.event.EventBenefitDetail;
 import christmas.domain.event.discount.CategoryDiscount;
 import christmas.domain.event.discount.TotalDiscount;
@@ -18,7 +18,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class DiscountServiceTest {
+class EventServiceTest {
 
     @Test
     @DisplayName("주문 내역과 할인 내역을 토대로, 올바르게 주문 금액을 할인한다.")
@@ -45,34 +45,35 @@ class DiscountServiceTest {
                 new MenuAmount(Menu.ZERO_COKE, 1)
         ));
 
-        DiscountService discountService = new DiscountService(
+        EventService eventService = new EventService(
                 today,
                 List.of(
-                        new DiscountEvent(
+                        new PlannerEvent(
                                 "크리스마스 디데이 할인",
                                 (o) -> {
                                     int diff = today.getDayOfMonth() - startOfDecember.getDayOfMonth();
                                     return Money.of(-1000 - 100 * diff);
                                 },
-                                new RangeEventDate(startOfDecember, endOfDecember)),
-                        new DiscountEvent("평일 할인",
+                                new RangeEventDate(startOfDecember, endOfDecember),
+                                (o) -> true),
+                        new PlannerEvent("평일 할인",
                                 new CategoryDiscount(Category.DESSERT, Money.of(-2_023L)),
-                                new RangeEventDate(startOfDecember, endOfDecember, weekdays)
-                        ),
-                        new DiscountEvent("주말 할인",
+                                new RangeEventDate(startOfDecember, endOfDecember, weekdays),
+                                (o) -> true),
+                        new PlannerEvent("주말 할인",
                                 new CategoryDiscount(Category.MAIN_DISH, Money.of(-2_023L)),
-                                new RangeEventDate(startOfDecember, endOfDecember, weekends)
-                        ),
-                        new DiscountEvent("특별 할인",
+                                new RangeEventDate(startOfDecember, endOfDecember, weekends),
+                                (o) -> true),
+                        new PlannerEvent("특별 할인",
                                 new TotalDiscount(Money.of(-1_000L)),
-                                new SpecificEventDate(eventDays)
-                        )
+                                new SpecificEventDate(eventDays),
+                                (o) -> true)
                 )
         );
         // when
-        List<EventBenefitDetail> eventBenefitDetails = discountService.applyDiscounts(orderMenu);
+        List<EventBenefitDetail> eventBenefitDetails = eventService.apply(orderMenu);
         List<Money> discountAmounts = eventBenefitDetails.stream()
-                .map(EventBenefitDetail::getDiscountAmount).toList();
+                .map(EventBenefitDetail::getPrice).toList();
         Money totalDiscountAmount = discountAmounts.stream().reduce(Money.of(0L), Money::add);
         // then
         Assertions.assertThat(eventBenefitDetails).hasSize(3);

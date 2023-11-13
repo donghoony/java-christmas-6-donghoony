@@ -1,9 +1,11 @@
 package christmas.domain.event.discount;
 
+import christmas.domain.Beneficial;
 import christmas.domain.Money;
+import christmas.domain.event.Event;
 import christmas.domain.menu.OrderMenu;
 
-public class TotalDiscount implements Discount {
+public class TotalDiscount implements Event {
     private final Money discountAmount;
 
     public TotalDiscount(Money discountAmount) {
@@ -11,7 +13,7 @@ public class TotalDiscount implements Discount {
     }
 
     @Override
-    public Money apply(OrderMenu orderMenu) {
+    public Beneficial apply(OrderMenu orderMenu) {
         return discountAmount;
     }
 }

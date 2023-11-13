@@ -1,22 +1,23 @@
 package christmas.domain.event;
 
+import christmas.domain.Beneficial;
 import christmas.domain.Money;
 
 public class EventBenefitDetail {
     private final String eventName;
-    private final Money discountAmount;
+    private final Beneficial benefit;
 
-    public EventBenefitDetail(String eventName, Money discountAmount) {
+    public EventBenefitDetail(String eventName, Beneficial benefit) {
         this.eventName = eventName;
-        this.discountAmount = discountAmount;
+        this.benefit = benefit;
     }
 
-    public Money getDiscountAmount() {
-        return discountAmount;
+    public Money getPrice() {
+        return benefit.getPrice();
     }
 
     @Override
     public String toString() {
-        return eventName + ": " + discountAmount;
+        return eventName + ": " + benefit.getPrice();
     }
 }
