@@ -1,8 +1,9 @@
-package io;
+package christmas.io;
 
 import camp.nextstep.edu.missionutils.Console;
 import christmas.domain.menu.Menu;
 import christmas.domain.menu.MenuAmount;
+import christmas.domain.menu.OrderMenu;
 import christmas.exception.ExceptionMessage;
 import christmas.exception.PlannerException;
 import java.time.YearMonth;
@@ -23,15 +24,17 @@ public class PlannerConsoleInput implements PlannerInput {
     }
 
     @Override
-    public List<MenuAmount> readOrders() {
+    public OrderMenu readOrders() {
         final String DELIMITER = ",";
 
         String input = Console.readLine();
         String[] splitInput = input.split(DELIMITER);
 
-        return Arrays.stream(splitInput)
+        List<MenuAmount> menuAmounts = Arrays.stream(splitInput)
                 .map(this::parseMenuAmount)
                 .toList();
+
+        return new OrderMenu(menuAmounts);
     }
 
     private MenuAmount parseMenuAmount(String orderInput) {

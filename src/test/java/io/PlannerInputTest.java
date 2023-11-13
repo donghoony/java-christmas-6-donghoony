@@ -1,15 +1,16 @@
 package io;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import camp.nextstep.edu.missionutils.Console;
-import christmas.domain.menu.Menu;
-import christmas.domain.menu.MenuAmount;
+import christmas.domain.menu.Category;
+import christmas.domain.menu.OrderMenu;
+import christmas.io.PlannerConsoleInput;
+import christmas.io.PlannerInput;
 import java.io.ByteArrayInputStream;
 import java.time.YearMonth;
-import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,8 +34,7 @@ class PlannerInputTest {
         setupInputStream(dayInput);
         YearMonth month = YearMonth.of(2023, 12);
         // when, then
-        assertThatThrownBy(() -> input.readDate(month))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> input.readDate(month)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest
@@ -109,14 +109,10 @@ class PlannerInputTest {
         // given
         setupInputStream("해산물파스타-2,레드와인-1,초코케이크-1");
         // when, then
-        List<MenuAmount> menuAmounts = input.readOrders();
-        Assertions.assertThat(menuAmounts).hasSameElementsAs(
-                List.of(
-                        new MenuAmount(Menu.SEAFOOD_PASTA, 2),
-                        new MenuAmount(Menu.RED_WINE, 1),
-                        new MenuAmount(Menu.CHOCOLATE_CAKE, 1)
-                )
-        );
+        OrderMenu order = input.readOrders();
+        assertThat(order.getCategoryCount(Category.MAIN_DISH)).isEqualTo(2);
+        assertThat(order.getCategoryCount(Category.DESSERT)).isEqualTo(1);
+        assertThat(order.getCategoryCount(Category.BEVERAGE)).isEqualTo(1);
     }
 
 
