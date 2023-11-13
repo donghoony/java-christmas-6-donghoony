@@ -33,4 +33,25 @@ class CategoryDiscountTest {
         // then
         assertThat(discountedAmount.getPrice()).isEqualTo(expectedDiscountAmount);
     }
+
+    @Test
+    @DisplayName("카테고리에 해당하는 음식이 없는 경우, 할인되지 않는다")
+    public void noCategoryExistsTest() {
+        // given
+        OrderMenu orderMenu = new OrderMenu(
+                List.of(
+                        new MenuAmount(Menu.BARBEQUE_RIB, 5),
+                        new MenuAmount(Menu.ICE_CREAM, 3)
+                )
+        );
+        Money discountPerDish = Money.of(1_000L);
+        Money expectedDiscountAmount = Money.of(0L);
+        CategoryDiscount categoryDiscount = new CategoryDiscount(Category.BEVERAGE, discountPerDish);
+        LocalDate today = LocalDate.of(2023, 12, 1);
+
+        //when
+        Beneficial discountedAmount = categoryDiscount.apply(today, orderMenu);
+        // then
+        assertThat(discountedAmount.getPrice()).isEqualTo(expectedDiscountAmount);
+    }
 }
