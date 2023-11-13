@@ -1,6 +1,7 @@
 package christmas.domain.menu;
 
 import christmas.domain.Money;
+import java.util.Arrays;
 
 public enum Menu {
     MUSHROOM_SOUP(Category.APPETIZER, "양송이수프", 6_000L),
@@ -18,6 +19,8 @@ public enum Menu {
     ZERO_COKE(Category.BEVERAGE, "제로콜라", 3_000L),
     RED_WINE(Category.BEVERAGE, "레드와인", 60_000L),
     CHAMPAGNE(Category.BEVERAGE, "샴페인", 25_000L),
+
+    NONE(null, "없음", 0L),
     ;
 
     private final Category category;
@@ -36,5 +39,12 @@ public enum Menu {
 
     public boolean isCategorySameAs(Category category) {
         return this.category == category;
+    }
+
+    public static Menu from(String name) {
+        return Arrays.stream(values())
+                .filter(menu -> menu.name.equals(name))
+                .findFirst()
+                .orElse(NONE);
     }
 }
