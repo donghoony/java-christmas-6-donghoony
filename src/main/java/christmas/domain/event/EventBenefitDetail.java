@@ -12,6 +12,14 @@ public class EventBenefitDetail {
         this.benefit = benefit;
     }
 
+    public boolean isGiveawayProduct() {
+        return !benefit.isMoney();
+    }
+
+    public String getBenefitAsString() {
+        return benefit.toString();
+    }
+
     public Money getPrice() {
         return benefit.getPrice();
     }

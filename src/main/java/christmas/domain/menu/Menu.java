@@ -47,4 +47,9 @@ public enum Menu {
                 .findFirst()
                 .orElse(NONE);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

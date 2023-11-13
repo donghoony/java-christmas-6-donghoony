@@ -5,4 +5,8 @@ public interface Beneficial {
 
     @Override
     String toString();
+
+    default boolean isMoney() {
+        return this instanceof Money;
+    }
 }

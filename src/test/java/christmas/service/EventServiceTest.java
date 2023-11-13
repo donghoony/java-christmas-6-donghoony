@@ -1,8 +1,8 @@
 package christmas.service;
 
 import christmas.domain.Money;
-import christmas.domain.event.PlannerEvent;
 import christmas.domain.event.EventBenefitDetail;
+import christmas.domain.event.PlannerEvent;
 import christmas.domain.event.discount.CategoryDiscount;
 import christmas.domain.event.discount.TotalDiscount;
 import christmas.domain.event.eventdate.RangeEventDate;
@@ -81,5 +81,36 @@ class EventServiceTest {
                 List.of(Money.of(-1_200L), Money.of(-4_046L), Money.of(-1_000L))
         );
         Assertions.assertThat(totalDiscountAmount).isEqualTo(Money.of(-31_246L + 25_000L));
+    }
+
+    @Test
+    @DisplayName("할인이 아닌 이벤트에 대해서 사은품을 올바르게 반환한다")
+    public void giveawayTest() {
+        // given
+        LocalDate today = LocalDate.of(2023, 12, 3);
+        EventService eventService = new EventService(
+                today,
+                List.of(
+                        new PlannerEvent(
+                                "무조건 1,000원 할인",
+                                (o) -> Money.of(1_000L),
+                                (date) -> true,
+                                (o) -> true
+                        ),
+                        new PlannerEvent(
+                                "무조건 샴페인 증정",
+                                (o) -> new MenuAmount(Menu.CHAMPAGNE, 1),
+                                (date) -> true,
+                                (o) -> true
+                        )
+                )
+        );
+        OrderMenu orderMenu = new OrderMenu(List.of(
+                new MenuAmount(Menu.TAPAS, 1)
+        ));
+        // when
+        List<String> benefits = eventService.getBenefitDetailsExceptMoney(orderMenu);
+        // then
+        Assertions.assertThat(benefits).hasSameElementsAs(List.of("샴페인 1개"));
     }
 }
