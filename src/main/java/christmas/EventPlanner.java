@@ -12,7 +12,7 @@ import christmas.service.EventService;
 import java.time.LocalDate;
 import java.time.YearMonth;
 
-public class EventPlanner {
+public class EventPlanner implements ExceptionLoopClient {
     private final EventService eventService;
     private final BadgeService badgeService;
     private final PlannerInput input;
@@ -29,9 +29,9 @@ public class EventPlanner {
     }
 
     public void planEvent() {
-        int day = readDate();
+        int day = repeatUntilValid(this::readDate);
 
-        OrderMenu orderMenu = readOrder();
+        OrderMenu orderMenu = repeatUntilValid(this::readOrder);
         Money totalPrice = orderMenu.getTotalPrice();
         LocalDate today = LocalDate.of(2023, month.getMonthValue(), day);
 
