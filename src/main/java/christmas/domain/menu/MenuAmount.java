@@ -15,8 +15,6 @@ public record MenuAmount(
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(menu.toString()).append(" ").append(amount).append("개");
-        return sb.toString();
+        return menu.toString() + " " + amount + "개";
     }
 }
