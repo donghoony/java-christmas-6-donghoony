@@ -9,8 +9,10 @@ import christmas.domain.menu.OrderMenu;
 public class PlannerConsoleOutput implements PlannerOutput {
     @Override
     public void askExpectedDay(int month) {
-        System.out.printf("안녕하세요! 우테코 식당 %d월 이벤트 플래너입니다.\n", month);
-        System.out.printf("%d월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)\n", month);
+        System.out.printf("안녕하세요! 우테코 식당 %d월 이벤트 플래너입니다.", month);
+        System.out.println();
+        System.out.printf("%d월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)", month);
+        System.out.println();
     }
 
     @Override
@@ -20,7 +22,8 @@ public class PlannerConsoleOutput implements PlannerOutput {
 
     @Override
     public void printAbstractIntroduction(int month, int day) {
-        System.out.printf("%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n", month, day);
+        System.out.printf("%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!", month, day);
+        System.out.println();
         System.out.println();
     }
 
