@@ -5,7 +5,8 @@ import java.text.NumberFormat;
 import java.util.Objects;
 
 public class Money implements Comparable<Money>, Beneficial {
-    private final String CURRENCY = "원";
+    private static final String CURRENCY = "원";
+    
     private final BigInteger amount;
 
     private Money(BigInteger amount) {
