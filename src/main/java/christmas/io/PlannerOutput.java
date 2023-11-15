@@ -17,7 +17,7 @@ public interface PlannerOutput {
 
     void printTotalPriceBeforeDiscount(Money amount);
 
-    void printBenefitExceptMoney(GiveawayProducts products);
+    void printGiveawayProducts(GiveawayProducts products);
 
     void printTotalBenefits(TotalEventBenefitDetails benefitDetails);
 

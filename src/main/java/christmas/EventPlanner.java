@@ -17,50 +17,57 @@ public class EventPlanner implements ExceptionLoopClient {
     private final BadgeService badgeService;
     private final PlannerInput input;
     private final PlannerOutput output;
-    private final YearMonth month;
+    private final YearMonth yearMonth;
 
     public EventPlanner(EventService eventService, BadgeService badgeService,
-                        PlannerInput input, PlannerOutput output, YearMonth month) {
+                        PlannerInput input, PlannerOutput output, YearMonth yearMonth) {
         this.eventService = eventService;
         this.badgeService = badgeService;
         this.input = input;
         this.output = output;
-        this.month = month;
+        this.yearMonth = yearMonth;
     }
 
     public void planEvent() {
-        int day = readDate();
-
+        LocalDate today = getToday();
         OrderMenu orderMenu = readOrder();
         Money totalPrice = orderMenu.getTotalPrice();
-        LocalDate today = LocalDate.of(2023, month.getMonthValue(), day);
+        TotalEventBenefitDetails totalBenefits = eventService.apply(today, orderMenu);
 
-        TotalEventBenefitDetails benefitDetails = eventService.apply(today, orderMenu);
-
-        output.printAbstractIntroduction(month.getMonthValue(), day);
-
+        output.printAbstractIntroduction(today.getMonthValue(), today.getDayOfMonth());
         output.printOrderMenu(orderMenu);
-        output.printTotalPriceBeforeDiscount(totalPrice);
 
-        GiveawayProducts giveawayProducts = benefitDetails.getGiveawayProducts();
-        output.printBenefitExceptMoney(giveawayProducts);
+        checkoutPayment(totalPrice, totalBenefits);
+        receiveBadge(totalBenefits);
+    }
 
-        output.printTotalBenefits(benefitDetails);
-
-        Money totalBenefitPrice = benefitDetails.getTotalBenefitAmount();
-        output.printTotalBenefitAmount(totalBenefitPrice);
-
-        Money totalPaymentPrice = totalPrice.add(benefitDetails.getTotalBenefitAmountWithoutGiveawayProducts());
-        output.printTotalPriceAfterDiscount(totalPaymentPrice);
-
+    private void receiveBadge(TotalEventBenefitDetails totalBenefits) {
+        Money totalBenefitPrice = totalBenefits.getTotalBenefitAmount();
         Badge badge = badgeService.getBadgeByTotalBenefit(totalBenefitPrice);
-        output.printEventBadge(month.getMonthValue(), badge);
+        output.printEventBadge(yearMonth.getMonthValue(), badge);
+    }
 
+    private void checkoutPayment(Money totalPrice, TotalEventBenefitDetails totalBenefits) {
+        Money totalBenefitPrice = totalBenefits.getTotalBenefitAmount();
+        Money totalPaymentPrice = totalPrice.add(totalBenefits.getTotalBenefitAmountWithoutGiveawayProducts());
+        GiveawayProducts giveawayProducts = totalBenefits.getGiveawayProducts();
+
+        output.printTotalPriceBeforeDiscount(totalPrice);
+        output.printGiveawayProducts(giveawayProducts);
+        output.printTotalBenefits(totalBenefits);
+        output.printTotalBenefitAmount(totalBenefitPrice);
+        output.printTotalPriceAfterDiscount(totalPaymentPrice);
+    }
+
+    private LocalDate getToday() {
+        int month = yearMonth.getMonthValue();
+        int day = readDate();
+        return LocalDate.of(yearMonth.getYear(), month, day);
     }
 
     private int readDate() {
-        output.askExpectedDay(month.getMonthValue());
-        return repeatUntilValid(() -> input.readDate(month));
+        output.askExpectedDay(yearMonth.getMonthValue());
+        return repeatUntilValid(() -> input.readDate(yearMonth));
     }
 
     private OrderMenu readOrder() {

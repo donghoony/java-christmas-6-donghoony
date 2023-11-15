@@ -39,7 +39,7 @@ public class PlannerConsoleOutput implements PlannerOutput {
     }
 
     @Override
-    public void printBenefitExceptMoney(GiveawayProducts products) {
+    public void printGiveawayProducts(GiveawayProducts products) {
         System.out.println("<증정 메뉴>");
         System.out.println(products);
         System.out.println();
