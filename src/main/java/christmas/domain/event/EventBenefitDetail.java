@@ -4,7 +4,7 @@ import christmas.domain.Beneficial;
 import christmas.domain.Money;
 
 public class EventBenefitDetail {
-    private final String NEGATIVE_SIGN = "-";
+    private static final String NEGATIVE_SIGN = "-";
 
     private final String eventName;
     private final Beneficial benefit;

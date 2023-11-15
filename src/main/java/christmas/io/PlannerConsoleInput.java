@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PlannerConsoleInput implements PlannerInput {
-    private final int MIN_AMOUNT_ORDER = 1;
+    private static final int MIN_AMOUNT_ORDER = 1;
 
     @Override
     public int readDate(YearMonth month) {
