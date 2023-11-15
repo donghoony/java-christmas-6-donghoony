@@ -49,7 +49,7 @@ public class EventPlanner implements ExceptionLoopClient {
 
     private void checkoutPayment(Money totalPrice, TotalEventBenefitDetails totalBenefits) {
         Money totalBenefitPrice = totalBenefits.getTotalBenefitAmount();
-        Money totalPaymentPrice = totalPrice.add(totalBenefits.getTotalBenefitAmountWithoutGiveawayProducts());
+        Money totalPaymentPrice = totalPrice.subtract(totalBenefits.getTotalBenefitAmountWithoutGiveawayProducts());
         GiveawayProducts giveawayProducts = totalBenefits.getGiveawayProducts();
 
         output.printTotalPriceBeforeDiscount(totalPrice);

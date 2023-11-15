@@ -56,9 +56,9 @@ public class PlannerConsoleOutput implements PlannerOutput {
     }
 
     @Override
-    public void printTotalBenefitAmount(Money amount) {
+    public void printTotalBenefitAmount(Money positiveAmount) {
         System.out.println("<총혜택 금액>");
-        System.out.println(amount);
+        System.out.println(positiveAmount.multiply(-1L));
         System.out.println();
     }
 

@@ -37,6 +37,11 @@ public class Money implements Comparable<Money>, Beneficial {
         return new Money(newAmount);
     }
 
+    public Money subtract(Money money) {
+        final BigInteger newAmount = this.amount.subtract(money.amount);
+        return new Money(newAmount);
+    }
+
     @Override
     public int compareTo(Money o) {
         return this.amount.compareTo(o.amount);
@@ -63,4 +68,5 @@ public class Money implements Comparable<Money>, Beneficial {
     public Money getPrice() {
         return this;
     }
+
 }

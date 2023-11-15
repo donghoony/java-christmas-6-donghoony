@@ -4,6 +4,8 @@ import christmas.domain.Beneficial;
 import christmas.domain.Money;
 
 public class EventBenefitDetail {
+    private final String NEGATIVE_SIGN = "-";
+
     private final String eventName;
     private final Beneficial benefit;
 
@@ -26,6 +28,6 @@ public class EventBenefitDetail {
 
     @Override
     public String toString() {
-        return eventName + ": " + benefit.getPrice().multiply(-1L);
+        return eventName + ": " + NEGATIVE_SIGN + benefit.getPrice();
     }
 }

@@ -74,7 +74,7 @@ class EventServiceTest {
         TotalEventBenefitDetails benefitDetails = eventService.apply(today, orderMenu);
         Money discountAmounts = benefitDetails.getTotalBenefitAmount();
         // then
-        Assertions.assertThat(discountAmounts).isEqualTo(Money.of(-31_246L + 25_000L));
+        Assertions.assertThat(discountAmounts).isEqualTo(Money.of(31_246L - 25_000L));
     }
 
     @Test
