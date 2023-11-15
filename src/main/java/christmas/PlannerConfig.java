@@ -92,7 +92,7 @@ public class PlannerConfig {
                 ),
                 new RangeEventDate(month.atDay(1), month.atEndOfMonth()),
                 (orderMenu -> orderMenu.getTotalPrice().compareTo(Money.of(120_000L)) >= 0 &&
-                                eventPredicate.test(orderMenu)));
+                        eventPredicate.test(orderMenu)));
     }
 
 }
