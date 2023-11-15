@@ -19,12 +19,12 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class PlannerInputTest {
 
+    PlannerInput input = new PlannerConsoleInput();
+
     public void setupInputStream(String inputString) {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(byteArrayInputStream);
     }
-
-    PlannerInput input = new PlannerConsoleInput();
 
     @ParameterizedTest
     @ValueSource(strings = {"0", "32", "-1", "123", "\n"})
