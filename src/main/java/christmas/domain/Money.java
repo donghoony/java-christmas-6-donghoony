@@ -56,7 +56,7 @@ public class Money implements Comparable<Money>, Beneficial {
 
     @Override
     public int hashCode() {
-        return Objects.hash(CURRENCY, amount);
+        return Objects.hash(amount);
     }
 
     @Override
