@@ -33,19 +33,19 @@ public enum Menu {
         this.price = Money.of(price);
     }
 
+    public static Menu from(String name) {
+        return Arrays.stream(values())
+                .filter(menu -> menu.name.equals(name))
+                .findFirst()
+                .orElse(NONE);
+    }
+
     public Money getPrice() {
         return price;
     }
 
     public boolean isCategorySameAs(Category category) {
         return this.category == category;
-    }
-
-    public static Menu from(String name) {
-        return Arrays.stream(values())
-                .filter(menu -> menu.name.equals(name))
-                .findFirst()
-                .orElse(NONE);
     }
 
     @Override
